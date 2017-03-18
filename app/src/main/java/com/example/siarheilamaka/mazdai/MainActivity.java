@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         button = (Button) findViewById(R.id.button);
 
         // hide the action bar
-        getActionBar().hide();
+//        getActionBar().hide();
 
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -49,8 +49,11 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 200);
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 200);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
                 "Hello mazda");
+
         try {
             startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
         } catch (ActivityNotFoundException a) {
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
      * */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        System.out.println(data);
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    System.out.println("Speech" + result.get(0));
                     textView.setText(result.get(0));
                 }
                 break;
